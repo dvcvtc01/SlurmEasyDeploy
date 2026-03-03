@@ -393,6 +393,7 @@ write_files:
       COMPUTE_USER=${COMPUTE_USER}
       POLL_SECONDS=${POLL_SECONDS}
       COMMAND_TIMEOUT_SECONDS=${COMMAND_TIMEOUT_SECONDS}
+      INCLUDE_SERVICE_LOGS=false
 runcmd:
   - [bash, -lc, "mkdir -p /etc/slurm-portal"]
   - [bash, -lc, "/usr/local/sbin/slurm-firstboot-controller.sh"]

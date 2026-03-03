@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.1-alpha] - 2026-03-03
+### Changed
+- Frontend polling now follows backend-configured `POLL_SECONDS` from the template.
+- Service failure logs are redacted by default unless `INCLUDE_SERVICE_LOGS=true`.
+- Deployment-generated `/etc/slurm-portal/appliance.env` now sets `INCLUDE_SERVICE_LOGS=false`.
+- Example credential placeholders use `<vcenter-secret>` to reduce secret-scan false positives.
+
+### Fixed
+- Hardened OVA extraction in `appliance/add-vapp-properties.py` with path and link safety checks.
+
 ## [0.2.0-alpha] - 2026-03-03
 ### Added
 - VMware 2-node deploy automation (`appliance/deploy-2node.sh`).

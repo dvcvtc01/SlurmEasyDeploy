@@ -125,7 +125,7 @@ sudo shutdown -h now
 2. Export OVA:
 ```bash
 ./appliance/build-ova.sh \
-  --source "vi://<vcenter-user>:<vcenter-password>@<vcenter-fqdn>/<dc>/vm/<template-vm>" \
+  --source "vi://<vcenter-user>:<vcenter-secret>@<vcenter-fqdn>/<dc>/vm/<template-vm>" \
   --output "./dist/slurm-portal-appliance.ova" \
   --name "slurm-portal-appliance" \
   --overwrite

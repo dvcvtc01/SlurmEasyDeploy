@@ -48,6 +48,17 @@ def sha256_file(path: Path) -> str:
     return h.hexdigest()
 
 
+def safe_extract_tar(tf: tarfile.TarFile, destination: Path) -> None:
+    destination_resolved = destination.resolve()
+    for member in tf.getmembers():
+        member_target = (destination / member.name).resolve()
+        if destination_resolved != member_target and destination_resolved not in member_target.parents:
+            raise SystemExit(f"Unsafe archive path detected: {member.name}")
+        if member.issym() or member.islnk():
+            raise SystemExit(f"Refusing archive with symlink/hardlink entry: {member.name}")
+    tf.extractall(destination)
+
+
 def patch_ovf(ovf_path: Path, args: argparse.Namespace) -> None:
     ET.register_namespace("", OVF_NS)
     ET.register_namespace("ovf", OVF_NS)
@@ -244,7 +255,7 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="vapp-ovf-") as tmp:
         tmp_path = Path(tmp)
         with tarfile.open(input_ova, "r:*") as tf:
-            tf.extractall(tmp_path)
+            safe_extract_tar(tf, tmp_path)
 
         ovf_files = sorted(tmp_path.glob("*.ovf"))
         if len(ovf_files) != 1:

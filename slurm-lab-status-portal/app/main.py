@@ -21,6 +21,12 @@ COMPUTE_HOST = os.getenv("COMPUTE_HOST", "slurm-c01")
 COMPUTE_USER = os.getenv("COMPUTE_USER", "compute-user")
 POLL_SECONDS = int(os.getenv("POLL_SECONDS", "12"))
 COMMAND_TIMEOUT_SECONDS = float(os.getenv("COMMAND_TIMEOUT_SECONDS", "3"))
+INCLUDE_SERVICE_LOGS = os.getenv("INCLUDE_SERVICE_LOGS", "false").strip().lower() in {
+    "1",
+    "true",
+    "yes",
+    "on",
+}
 
 SSH_BASE_ARGS = [
     "ssh",
@@ -405,6 +411,9 @@ def service_status(service_name: str, remote: bool) -> dict[str, Any]:
         entry["enabled_error"] = enabled_result["stderr"]
 
     if active_value not in {"active"}:
+        if not INCLUDE_SERVICE_LOGS:
+            entry["recent_logs_redacted"] = True
+            return entry
         if remote:
             journal_result = run_compute(f"journalctl -u {service_name} -n 20 --no-pager")
         else:

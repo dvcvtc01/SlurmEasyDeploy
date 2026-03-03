@@ -1,4 +1,9 @@
-const POLL_MS = 12000;
+function configuredPollMs() {
+  const raw = document.body?.dataset?.pollSeconds || "12";
+  const seconds = Number.parseInt(raw, 10);
+  const safeSeconds = Number.isFinite(seconds) && seconds > 0 ? seconds : 12;
+  return safeSeconds * 1000;
+}
 
 async function fetchJson(url) {
   try {
@@ -153,6 +158,9 @@ function renderHealth(controllerPayload, computePayload) {
 }
 
 function logExcerpt(entry) {
+  if (entry.recent_logs_redacted) {
+    return "redacted (set INCLUDE_SERVICE_LOGS=true to include logs)";
+  }
   if (!entry.recent_logs || entry.recent_logs.length === 0) {
     return entry.active === "active" ? "none" : (entry.recent_logs_error || entry.active_error || "no logs");
   }
@@ -255,4 +263,4 @@ async function refresh() {
 }
 
 refresh();
-setInterval(refresh, POLL_MS);
+setInterval(refresh, configuredPollMs());

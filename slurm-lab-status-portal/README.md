@@ -69,6 +69,7 @@ COMPUTE_HOST=slurm-c01
 COMPUTE_USER=compute-user
 POLL_SECONDS=12
 COMMAND_TIMEOUT_SECONDS=3
+INCLUDE_SERVICE_LOGS=false
 ```
 
 ## Compute SSH Trust
@@ -100,6 +101,7 @@ curl -sS http://127.0.0.1:18080/api/services | jq .
 
 ## Security Notes
 - This project is intentionally read-only and unauthenticated in alpha.
+- Service logs are redacted by default (`INCLUDE_SERVICE_LOGS=false`) to reduce data exposure.
 - Do not expose it to untrusted networks without adding auth, TLS, and hardening.
 
 ## Project Status

@@ -17,6 +17,7 @@ Environment=COMPUTE_HOST=slurm-c01
 Environment=COMPUTE_USER=compute-user
 Environment=POLL_SECONDS=12
 Environment=COMMAND_TIMEOUT_SECONDS=3
+Environment=INCLUDE_SERVICE_LOGS=false
 EnvironmentFile=-/etc/slurm-portal/appliance.env
 ExecStart=/opt/slurm-portal/.venv/bin/uvicorn app.main:app --host ${BIND_HOST} --port ${BIND_PORT}
 Restart=always

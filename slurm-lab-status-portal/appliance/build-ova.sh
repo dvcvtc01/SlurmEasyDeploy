@@ -26,7 +26,7 @@ Examples:
 
   # Export from vCenter inventory object
   ./appliance/build-ova.sh \
-    --source "vi://<vcenter-user>:<vcenter-password>@<vcenter-fqdn>/DC01/vm/Templates/slurm-portal-template" \
+    --source "vi://<vcenter-user>:<vcenter-secret>@<vcenter-fqdn>/DC01/vm/Templates/slurm-portal-template" \
     --output "./dist/slurm-portal-appliance.ova" \
     --name "slurm-portal-appliance"
 
