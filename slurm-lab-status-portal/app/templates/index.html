@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ app_name }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
+  <div class="container">
+    <header class="panel stagger-1">
+      <div>
+        <p class="eyebrow">Read-Only Lab View</p>
+        <h1>{{ app_name }}</h1>
+        <p class="muted">Controller: {{ controller_host }} ({{ controller_ip }}) · Compute: {{ compute_host }}</p>
+      </div>
+      <div class="poll-card">
+        <p>Auto-refresh</p>
+        <strong>{{ poll_seconds }}s</strong>
+        <small id="last-updated">Waiting for first update...</small>
+      </div>
+    </header>
+
+    <section class="panel stagger-2">
+      <h2>Quick Health Indicators</h2>
+      <div class="indicator-grid" id="quick-indicators">
+        <div class="indicator">Controller Reachable: <span class="badge neutral">...</span></div>
+        <div class="indicator">Compute Reachable: <span class="badge neutral">...</span></div>
+        <div class="indicator">slurmctld Active: <span class="badge neutral">...</span></div>
+        <div class="indicator">slurmd Active: <span class="badge neutral">...</span></div>
+      </div>
+    </section>
+
+    <section class="panel stagger-3">
+      <h2>Cluster Status</h2>
+      <div class="table-wrap">
+        <h3>Partitions</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Partition</th>
+              <th>Avail</th>
+              <th>Time Limit</th>
+              <th>Nodes</th>
+              <th>State</th>
+              <th>Node List</th>
+            </tr>
+          </thead>
+          <tbody id="partitions-body"></tbody>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <h3>Nodes</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Node</th>
+              <th>State</th>
+              <th>CPUs</th>
+              <th>CPU Alloc</th>
+              <th>RealMemory MB</th>
+              <th>AllocMem MB</th>
+              <th>Reason</th>
+            </tr>
+          </thead>
+          <tbody id="nodes-body"></tbody>
+        </table>
+      </div>
+      <div class="split">
+        <div class="table-wrap">
+          <h3>Queued/Running Jobs</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>JobID</th>
+                <th>User</th>
+                <th>State</th>
+                <th>Elapsed</th>
+                <th>Nodes</th>
+                <th>Reason</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody id="jobs-active-body"></tbody>
+          </table>
+        </div>
+        <div class="table-wrap">
+          <h3>Completed (Last 10 via sacct)</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>JobID</th>
+                <th>User</th>
+                <th>State</th>
+                <th>Elapsed</th>
+                <th>NodeList</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody id="jobs-completed-body"></tbody>
+          </table>
+          <p class="muted mono" id="jobs-meta"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel stagger-4">
+      <h2>System Health</h2>
+      <div class="health-grid">
+        <article class="health-card" id="controller-health"></article>
+        <article class="health-card" id="compute-health"></article>
+      </div>
+    </section>
+
+    <section class="panel stagger-5">
+      <h2>Services and Components</h2>
+      <div class="split">
+        <div class="table-wrap">
+          <h3>Controller Services</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Active</th>
+                <th>Enabled</th>
+                <th>Error Logs (if failed)</th>
+              </tr>
+            </thead>
+            <tbody id="services-controller-body"></tbody>
+          </table>
+        </div>
+        <div class="table-wrap">
+          <h3>Compute Services</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Active</th>
+                <th>Enabled</th>
+                <th>Error Logs (if failed)</th>
+              </tr>
+            </thead>
+            <tbody id="services-compute-body"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <h3>Expected Ports</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Host</th>
+              <th>Service</th>
+              <th>Expected Port</th>
+              <th>Listening</th>
+            </tr>
+          </thead>
+          <tbody id="ports-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel stagger-6">
+      <h2>What’s Next</h2>
+      <div class="next-grid">
+        <div class="next-card">
+          <h3>Add job submission page (templates)</h3>
+          <p class="badge bad">NOT IMPLEMENTED</p>
+        </div>
+        <div class="next-card">
+          <h3>Add accounting (slurmdbd + DB)</h3>
+          <p class="badge bad" id="cap-slurmdbd">NOT INSTALLED</p>
+        </div>
+        <div class="next-card">
+          <h3>Add cgroup enforcement</h3>
+          <p class="badge bad">NOT IMPLEMENTED</p>
+          <p class="muted mono" id="cap-cgroup"></p>
+        </div>
+        <div class="next-card">
+          <h3>Add RBAC/login</h3>
+          <p class="badge bad">NOT IMPLEMENTED</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

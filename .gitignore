@@ -1,0 +1,25 @@
+# Build and export artifacts
+/dist/
+/tools/
+*.ova
+*.ovf
+*.vmdk
+*.mf
+*.sha256
+
+# Python
+**/__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Runtime/config (local only)
+*.env
+appliance/govc.env
+**/appliance/govc.env
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

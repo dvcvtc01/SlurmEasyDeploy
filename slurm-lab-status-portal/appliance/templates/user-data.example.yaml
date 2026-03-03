@@ -1,0 +1,24 @@
+#cloud-config
+preserve_hostname: false
+hostname: customer-slurm-portal01
+fqdn: customer-slurm-portal01.example.local
+manage_etc_hosts: true
+timezone: UTC
+write_files:
+  - path: /etc/slurm-portal/appliance.env
+    permissions: "0644"
+    owner: root:root
+    content: |
+      BIND_HOST=0.0.0.0
+      BIND_PORT=18080
+      CONTROLLER_HOST=slurm-ctrl01
+      CONTROLLER_IP=10.0.10.10
+      COMPUTE_HOST=slurm-c01
+      COMPUTE_USER=compute-user
+      POLL_SECONDS=12
+      COMMAND_TIMEOUT_SECONDS=3
+runcmd:
+  - [bash, -lc, "mkdir -p /etc/slurm-portal"]
+  - [bash, -lc, "ufw allow 18080/tcp || true"]
+  - [bash, -lc, "systemctl daemon-reload"]
+  - [bash, -lc, "systemctl enable --now slurm-portal"]

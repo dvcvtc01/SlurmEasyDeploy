@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local env/secrets
+appliance/govc.env
+*.env
+
+# Appliance artifacts
+*.ova
+*.ovf
+*.vmdk
+*.mf
+/dist/
+
+# Logs
+*.log

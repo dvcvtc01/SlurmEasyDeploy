@@ -1,0 +1,288 @@
+:root {
+  --bg-deep: #041822;
+  --bg-mid: #0a2f3f;
+  --panel: rgba(7, 33, 45, 0.78);
+  --panel-border: rgba(130, 194, 186, 0.28);
+  --text: #e8fff8;
+  --muted: #9bc1bb;
+  --good: #3ddc97;
+  --bad: #ff806b;
+  --neutral: #f7c873;
+  --accent: #54b5ff;
+  --shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  font-family: "Space Grotesk", sans-serif;
+  background: radial-gradient(circle at 15% 20%, #114e52 0%, transparent 38%),
+    radial-gradient(circle at 85% 10%, #6f3f1e 0%, transparent 35%),
+    linear-gradient(145deg, var(--bg-deep), var(--bg-mid));
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.orb {
+  position: fixed;
+  border-radius: 999px;
+  filter: blur(48px);
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.orb-a {
+  width: 320px;
+  height: 320px;
+  top: -80px;
+  left: -90px;
+  background: #3ddc97;
+}
+
+.orb-b {
+  width: 300px;
+  height: 300px;
+  right: -100px;
+  bottom: -70px;
+  background: #ff806b;
+}
+
+.container {
+  width: min(1240px, calc(100% - 2rem));
+  margin: 1rem auto 3rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 18px;
+  padding: 1rem 1.1rem;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(5px);
+}
+
+.stagger-1,
+.stagger-2,
+.stagger-3,
+.stagger-4,
+.stagger-5,
+.stagger-6 {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: rise 450ms ease forwards;
+}
+
+.stagger-2 { animation-delay: 90ms; }
+.stagger-3 { animation-delay: 140ms; }
+.stagger-4 { animation-delay: 190ms; }
+.stagger-5 { animation-delay: 240ms; }
+.stagger-6 { animation-delay: 290ms; }
+
+@keyframes rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+header.panel {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+h1, h2, h3 {
+  margin: 0 0 0.4rem;
+}
+
+h1 {
+  font-size: clamp(1.3rem, 2vw, 2rem);
+  letter-spacing: 0.02em;
+}
+
+h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+h3 {
+  font-size: 0.95rem;
+  color: #d2f8f1;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.mono {
+  font-family: "IBM Plex Mono", monospace;
+  word-break: break-word;
+}
+
+.poll-card {
+  min-width: 160px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.7rem;
+  text-align: right;
+  background: rgba(4, 26, 36, 0.62);
+}
+
+.poll-card p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.poll-card strong {
+  font-size: 1.35rem;
+  display: block;
+}
+
+.poll-card small {
+  color: var(--muted);
+}
+
+.indicator-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  gap: 0.6rem;
+}
+
+.indicator {
+  border: 1px solid rgba(160, 211, 201, 0.2);
+  border-radius: 10px;
+  padding: 0.6rem;
+  background: rgba(0, 0, 0, 0.18);
+  font-size: 0.9rem;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(300px, 1fr));
+  gap: 0.9rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin-bottom: 0.9rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 580px;
+}
+
+th, td {
+  text-align: left;
+  border-bottom: 1px solid rgba(168, 215, 203, 0.14);
+  padding: 0.5rem 0.45rem;
+  font-size: 0.85rem;
+  vertical-align: top;
+}
+
+th {
+  color: #a9ddcf;
+  font-weight: 600;
+}
+
+.health-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(300px, 1fr));
+  gap: 0.9rem;
+}
+
+.health-card {
+  border-radius: 12px;
+  padding: 0.9rem;
+  border: 1px solid rgba(148, 207, 197, 0.25);
+  background: rgba(2, 17, 26, 0.45);
+}
+
+.health-card p {
+  margin: 0.45rem 0;
+  font-size: 0.9rem;
+}
+
+.next-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(190px, 1fr));
+  gap: 0.8rem;
+}
+
+.next-card {
+  border-radius: 12px;
+  border: 1px solid rgba(151, 206, 197, 0.24);
+  padding: 0.8rem;
+  background: rgba(3, 20, 31, 0.5);
+}
+
+.next-card h3 {
+  min-height: 2.8rem;
+}
+
+.badge {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.16rem 0.56rem;
+  font-weight: 600;
+  font-size: 0.74rem;
+  letter-spacing: 0.02em;
+  border: 1px solid transparent;
+}
+
+.badge.good {
+  color: #b8ffe0;
+  background: rgba(61, 220, 151, 0.2);
+  border-color: rgba(61, 220, 151, 0.42);
+}
+
+.badge.bad {
+  color: #ffd0c8;
+  background: rgba(255, 128, 107, 0.2);
+  border-color: rgba(255, 128, 107, 0.45);
+}
+
+.badge.neutral {
+  color: #ffe9bd;
+  background: rgba(247, 200, 115, 0.2);
+  border-color: rgba(247, 200, 115, 0.45);
+}
+
+@media (max-width: 1040px) {
+  .indicator-grid {
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+  }
+
+  .split,
+  .health-grid,
+  .next-grid {
+    grid-template-columns: 1fr;
+  }
+
+  header.panel {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .poll-card {
+    text-align: left;
+  }
+}

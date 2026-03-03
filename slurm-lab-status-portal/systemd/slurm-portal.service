@@ -1,0 +1,26 @@
+[Unit]
+Description=Slurm Lab Status Portal (FastAPI)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=slurmportal
+Group=slurmportal
+WorkingDirectory=/opt/slurm-portal
+Environment=PYTHONUNBUFFERED=1
+Environment=BIND_HOST=0.0.0.0
+Environment=BIND_PORT=18080
+Environment=CONTROLLER_HOST=slurm-ctrl01
+Environment=CONTROLLER_IP=10.0.10.10
+Environment=COMPUTE_HOST=slurm-c01
+Environment=COMPUTE_USER=compute-user
+Environment=POLL_SECONDS=12
+Environment=COMMAND_TIMEOUT_SECONDS=3
+EnvironmentFile=-/etc/slurm-portal/appliance.env
+ExecStart=/opt/slurm-portal/.venv/bin/uvicorn app.main:app --host ${BIND_HOST} --port ${BIND_PORT}
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
